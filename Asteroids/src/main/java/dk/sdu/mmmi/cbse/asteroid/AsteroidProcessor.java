@@ -6,6 +6,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.components.HealthComponent;
 
 public class AsteroidProcessor implements IEntityProcessingService {
 
@@ -13,7 +14,6 @@ public class AsteroidProcessor implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-
         for (Entity asteroid : world.getEntities(Asteroid.class)) {
             double changeX = Math.cos(Math.toRadians(asteroid.getRotation()));
             double changeY = Math.sin(Math.toRadians(asteroid.getRotation()));
@@ -21,29 +21,34 @@ public class AsteroidProcessor implements IEntityProcessingService {
             asteroid.setX(asteroid.getX() + changeX * 0.5);
             asteroid.setY(asteroid.getY() + changeY * 0.5);
 
+            HealthComponent health = asteroid.get(HealthComponent.class);
+            if (health != null) {
+                System.out.println("Asteroid health: " + health.getHealth());
+                if (health.getHealth() <= 0) {
+                    asteroidSplitter.createSplitAsteroid(asteroid, world);
+                    continue;
+                }
+            }
+
+            
             if (asteroid.getX() < 0) {
-                asteroid.setX(asteroid.getX() - gameData.getDisplayWidth());
+                asteroid.setX(gameData.getDisplayWidth());
             }
 
             if (asteroid.getX() > gameData.getDisplayWidth()) {
-                asteroid.setX(asteroid.getX() % gameData.getDisplayWidth());
+                asteroid.setX(0);
             }
 
             if (asteroid.getY() < 0) {
-                asteroid.setY(asteroid.getY() - gameData.getDisplayHeight());
+                asteroid.setY(gameData.getDisplayHeight());
             }
 
             if (asteroid.getY() > gameData.getDisplayHeight()) {
-                asteroid.setY(asteroid.getY() % gameData.getDisplayHeight());
+                asteroid.setY(0);
             }
-
         }
-
     }
 
-    /**
-     * Dependency Injection using OSGi Declarative Services
-     */
     public void setAsteroidSplitter(IAsteroidSplitter asteroidSplitter) {
         this.asteroidSplitter = asteroidSplitter;
     }
@@ -51,6 +56,4 @@ public class AsteroidProcessor implements IEntityProcessingService {
     public void removeAsteroidSplitter(IAsteroidSplitter asteroidSplitter) {
         this.asteroidSplitter = null;
     }
-
-
 }

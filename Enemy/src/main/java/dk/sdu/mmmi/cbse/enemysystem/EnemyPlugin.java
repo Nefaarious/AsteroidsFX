@@ -1,5 +1,7 @@
 package dk.sdu.mmmi.cbse.enemysystem;
 
+import dk.sdu.mmmi.cbse.common.components.CollisionComponent;
+import dk.sdu.mmmi.cbse.common.components.HealthComponent;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -26,6 +28,9 @@ public class EnemyPlugin implements IGamePluginService {
         enemyShip.setX(gameData.getDisplayHeight()/10);
         enemyShip.setY(gameData.getDisplayWidth()/10);
         enemyShip.setRadius(8);
+        enemyShip.addComponent(new HealthComponent(10));
+        enemyShip.addComponent(new CollisionComponent());
+        
         return enemyShip;
     }
 
