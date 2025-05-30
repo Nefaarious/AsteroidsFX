@@ -32,6 +32,9 @@ public class CollisionDetector implements IPostEntityProcessingService {
                         } else if (damage2 != null) {
                             applyDamage(entity1, damage2.getDamage(), world);
                             world.removeEntity(entity2);
+                        } else {
+                            world.removeEntity(entity1);
+                            world.removeEntity(entity2);
                         }
                     }
                 }

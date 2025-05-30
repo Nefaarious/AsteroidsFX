@@ -33,18 +33,20 @@ public class AsteroidSplitterImpl implements IAsteroidSplitter {
                 newRadius, newRadius
             );
 
-            splitAsteroid.setX(entity.getX());
-            splitAsteroid.setY(entity.getY());
+            float splitDistance = 40;
+            double angle = -120 + (i * 180);
+            
+            float dx = (float) Math.cos(Math.toRadians(angle)) * splitDistance;
+            float dy = (float) Math.sin(Math.toRadians(angle)) * splitDistance;
+            
+            splitAsteroid.setX(entity.getX() + dx);
+            splitAsteroid.setY(entity.getY() + dy);
+            
+            splitAsteroid.setRotation(angle + rnd.nextInt(20) - 10);
 
-            splitAsteroid.addComponent(new CollisionComponent());
             int health = (int)(newRadius / 5);
             splitAsteroid.addComponent(new HealthComponent(health));
-
-            double baseRotation = entity.getRotation();
-            double spreadAngle = 45.0;
-            double newRotation = baseRotation + (i == 0 ? -spreadAngle : spreadAngle);
-            newRotation += rnd.nextDouble() * 30 - 15; 
-            splitAsteroid.setRotation(newRotation);
+            splitAsteroid.addComponent(new CollisionComponent());
 
             world.addEntity(splitAsteroid);
         }
