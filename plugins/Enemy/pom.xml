@@ -5,13 +5,12 @@
         <groupId>dk.sdu.mmmi.cbse</groupId>
         <artifactId>asteroids.jpms</artifactId>
         <version>1.0.1-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
-
 
     <artifactId>Enemy</artifactId>
     <packaging>jar</packaging>
     <name>Enemy</name>
-
 
     <dependencies>
         <dependency>
@@ -25,4 +24,17 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <outputDirectory>${project.basedir}/../../plugins/mods-mvn</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

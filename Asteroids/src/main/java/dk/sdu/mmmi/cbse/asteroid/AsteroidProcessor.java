@@ -23,7 +23,6 @@ public class AsteroidProcessor implements IEntityProcessingService {
 
             HealthComponent health = asteroid.get(HealthComponent.class);
             if (health != null) {
-                System.out.println("Asteroid health: " + health.getHealth());
                 if (health.getHealth() <= 0) {
                     asteroidSplitter.createSplitAsteroid(asteroid, world);
                     continue;

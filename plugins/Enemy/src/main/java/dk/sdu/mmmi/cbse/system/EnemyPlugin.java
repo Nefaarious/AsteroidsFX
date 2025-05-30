@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.enemysystem;
+package dk.sdu.mmmi.cbse.system;
 
 import dk.sdu.mmmi.cbse.common.components.CollisionComponent;
 import dk.sdu.mmmi.cbse.common.components.HealthComponent;

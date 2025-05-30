@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.enemysystem;
+package dk.sdu.mmmi.cbse.system;
 
 import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.components.HealthComponent;
@@ -14,7 +14,7 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 
-public class EnemyControlSystem implements IEntityProcessingService {
+public class ControlSystem implements IEntityProcessingService {
 
     private final Random random = new Random();
     @Override
