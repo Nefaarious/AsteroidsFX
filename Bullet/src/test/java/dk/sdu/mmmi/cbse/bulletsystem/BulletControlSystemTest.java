@@ -51,7 +51,6 @@ public class BulletControlSystemTest {
     @Test
     public void testProcessRemovesBulletOutOfBounds() {
         Bullet bullet = new Bullet();
-        // We are setting the bullets coordinates/position to be out of bounds.
         bullet.setX(900);
         bullet.setY(100);
         bullet.setRotation(0);

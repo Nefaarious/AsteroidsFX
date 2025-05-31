@@ -109,6 +109,8 @@ public class Game {
         for (IPostEntityProcessingService postProcess : getPostEntityProcessingServices()) {
             postProcess.process(gameData, world);
         }
+        Text text = (Text) gameWindow.getChildren().get(0);
+        text.setText("You can see the score at http://localhost:8080/current-score");
     }
 
     private void draw() {

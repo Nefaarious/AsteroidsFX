@@ -22,8 +22,6 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
             bullet.setX(bullet.getX() + changeX * 3);
             bullet.setY(bullet.getY() + changeY * 3);
 
-            // If statement to check if the bullet is out of bounds, if so, it will remove it.
-            //This is to prevent lagging caused by excessive entities being created.
             if (bullet.getX() < 0 || bullet.getX() > gameData.getDisplayWidth() ||
                 bullet.getY() < 0 || bullet.getY() > gameData.getDisplayHeight()) {
                 world.removeEntity(bullet);

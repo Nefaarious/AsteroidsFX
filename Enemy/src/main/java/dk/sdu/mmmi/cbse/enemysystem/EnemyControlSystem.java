@@ -7,16 +7,22 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Collection;
 import java.util.Random;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-
 public class EnemyControlSystem implements IEntityProcessingService {
 
     private final Random random = new Random();
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+    private static final String pointsURL = "http://localhost:8080";
+
     @Override
     public void process(GameData gameData, World world) {
 
@@ -25,6 +31,15 @@ public class EnemyControlSystem implements IEntityProcessingService {
             HealthComponent health = enemy.get(HealthComponent.class);
             if (health != null && health.getHealth() <= 0) {
                 world.removeEntity(enemy);
+                try {
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create(pointsURL + "/enemy-destroyed"))
+                            .GET()
+                            .build();
+                    httpClient.sendAsync(request, HttpResponse.BodyHandlers.discarding());
+                } catch (Exception e) {
+                    System.err.println("Failed to update score: " + e.getMessage());
+                }
                 continue;
             }
             
